@@ -67,7 +67,7 @@ const renderMessage = (dictionaryResults) => {
     const FIRST_DAY_WORDLE = moment("2022-01-10T00:00:00");
     const wordId = moment().startOf('day').diff(FIRST_DAY_WORDLE, 'days') + 1;
 
-    let message = `Les résultats du mot #${wordId} :  \n`;
+    let message = `Les résultats du mot #${wordId} :\n\n`;
 
     for(let note in dictionaryResults) {
         const users = dictionaryResults[note];
