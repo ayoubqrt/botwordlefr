@@ -17,7 +17,7 @@ const doRecapResultsOfDay = () => {
             console.log(`Received ${messages.size} messages`);
             const dictResult = getMessagesAssociatedToWordle(messages);
             const message = renderMessage(dictResult);
-            channel.send(message);
+            // channel.send(mess5age);
         })        
     });
 }
@@ -30,10 +30,12 @@ const getMessagesAssociatedToWordle = (messages) => {
         if(message.content.includes("Le Mot (@WordleFR)")) {
 
             const wordId = moment().startOf('day').diff(FIRST_DAY_WORDLE, 'days') + 1;
+
+            const messageContent: string = message.content;
             
-            const contentMessage = message.content.split('\n');
+            const contentMessage = messageContent.split('\n');
             const firstLine = contentMessage[0].split(' ');
-            const wordIdMessage =   firstLine[3];
+            const wordIdMessage = firstLine[3];
 
             
             if(`#${wordId}` === wordIdMessage) {
@@ -63,7 +65,7 @@ const getMessagesAssociatedToWordle = (messages) => {
     return dictionaryResults;
 }
 
-const renderMessage = (dictionaryResults) => {
+const renderMessage = (dictionaryResults: Object) => {
     const FIRST_DAY_WORDLE = moment("2022-01-10T00:00:00");
     const wordId = moment().startOf('day').diff(FIRST_DAY_WORDLE, 'days') + 1;
 

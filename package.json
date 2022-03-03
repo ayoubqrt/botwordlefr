@@ -1,17 +1,20 @@
 {
-  "name": "wordle",
+  "name": "botwordlefr",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
-    "start": "node index.js",
+    "start": "tsc && node build/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "ayoubqrt",
   "license": "ISC",
   "dependencies": {
     "discord.js": "^13.6.0",
     "dotenv": "^16.0.0",
     "moment": "^2.29.1"
+  },
+  "devDependencies": {
+    "typescript": "^4.6.2"
   }
 }
