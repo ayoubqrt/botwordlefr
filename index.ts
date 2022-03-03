@@ -7,7 +7,7 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 const channelId = "939514004789944341";
 
 client.once('ready', () => {
-	console.log('Ready!');
+    console.log('Ready!');
     doRecapResultsOfDay();
 });
 
@@ -17,7 +17,7 @@ const doRecapResultsOfDay = () => {
             console.log(`Received ${messages.size} messages`);
             const dictResult = getMessagesAssociatedToWordle(messages);
             const message = renderMessage(dictResult);
-            // channel.send(mess5age);
+            // channel.send(message);
         })        
     });
 }
