@@ -2,7 +2,7 @@
 
 ## Description
 
-Ce bot permet de récupérer les résultats des personnes qui participent tous les jours au jeu « [Le mot](https://wordle.louan.me/) » et de faire un récapitulatif de la journée en envoyant un message dans un channel.
+Ce bot permet de récupérer les résultats des personnes qui participent tous les jours au jeu « [Le mot](https://wordle.louan.me/) » et de faire un récapitulatif de la journée en envoyant un message dans un channel dédié.
 
 ## Pré-requis 
 
