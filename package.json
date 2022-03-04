@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
+    "build": "tsc",
     "start": "tsc && node build/index.js",
+    "startprod": "node build/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "ayoubqrt",

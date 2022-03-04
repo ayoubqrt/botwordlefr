@@ -17,7 +17,7 @@ const doRecapResultsOfDay = () => {
             console.log(`Received ${messages.size} messages`);
             const dictResult = getMessagesAssociatedToWordle(messages);
             const message = renderMessage(dictResult);
-            // channel.send(message);
+            channel.send(message);
         })        
     });
 }
