@@ -6,6 +6,9 @@ const token = process.env.token;
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 const channelId = "939514004789944341";
 
+const FIRST_DAY_WORDLE = moment("2022-01-10T00:00:00");
+const wordId = moment().startOf('day').diff(FIRST_DAY_WORDLE, 'days') + 1;
+
 client.once('ready', () => {
     console.log('Ready!');
     doRecapResultsOfDay();
@@ -23,14 +26,10 @@ const doRecapResultsOfDay = () => {
 }
 
 const getMessagesAssociatedToWordle = (messages) => {
-    const FIRST_DAY_WORDLE = moment("2022-01-10T00:00:00");
 
     let dictionaryResults = {};
     messages.filter((message) => {
         if(message.content.includes("Le Mot (@WordleFR)")) {
-
-            const wordId = moment().startOf('day').diff(FIRST_DAY_WORDLE, 'days') + 1;
-
             const messageContent: string = message.content;
             
             const contentMessage = messageContent.split('\n');
@@ -66,9 +65,6 @@ const getMessagesAssociatedToWordle = (messages) => {
 }
 
 const renderMessage = (dictionaryResults: Object) => {
-    const FIRST_DAY_WORDLE = moment("2022-01-10T00:00:00");
-    const wordId = moment().startOf('day').diff(FIRST_DAY_WORDLE, 'days') + 1;
-
     let message = `Les résultats du mot #${wordId} :\n\n`;
 
     for(let note in dictionaryResults) {

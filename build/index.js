@@ -4,6 +4,8 @@ require('dotenv').config();
 var token = process.env.token;
 var client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 var channelId = "939514004789944341";
+var FIRST_DAY_WORDLE = moment("2022-01-10T00:00:00");
+var wordId = moment().startOf('day').diff(FIRST_DAY_WORDLE, 'days') + 1;
 client.once('ready', function () {
     console.log('Ready!');
     doRecapResultsOfDay();
@@ -19,11 +21,9 @@ var doRecapResultsOfDay = function () {
     });
 };
 var getMessagesAssociatedToWordle = function (messages) {
-    var FIRST_DAY_WORDLE = moment("2022-01-10T00:00:00");
     var dictionaryResults = {};
     messages.filter(function (message) {
         if (message.content.includes("Le Mot (@WordleFR)")) {
-            var wordId = moment().startOf('day').diff(FIRST_DAY_WORDLE, 'days') + 1;
             var messageContent = message.content;
             var contentMessage = messageContent.split('\n');
             var firstLine = contentMessage[0].split(' ');
@@ -53,8 +53,6 @@ var getMessagesAssociatedToWordle = function (messages) {
     return dictionaryResults;
 };
 var renderMessage = function (dictionaryResults) {
-    var FIRST_DAY_WORDLE = moment("2022-01-10T00:00:00");
-    var wordId = moment().startOf('day').diff(FIRST_DAY_WORDLE, 'days') + 1;
     var message = "Les r\u00E9sultats du mot #".concat(wordId, " :\n\n");
     for (var note in dictionaryResults) {
         var users = dictionaryResults[note];
