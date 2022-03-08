@@ -4,7 +4,7 @@ require('dotenv').config();
 
 const token = process.env.token;
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
-const channelId = "939514004789944341";
+const channelId = process.env.channelid;
 
 const FIRST_DAY_WORDLE = moment("2022-01-10T00:00:00");
 const wordId = moment().startOf('day').diff(FIRST_DAY_WORDLE, 'days') + 1;
