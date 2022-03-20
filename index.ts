@@ -20,8 +20,8 @@ const doRecapResultsOfDay = () => {
             console.log(`Received ${messages.size} messages`);
             const dictResult = getMessagesAssociatedToWordle(messages);
             const message = renderMessage(dictResult);
-            // channel.send(message);
-            console.log("salut");
+            channel.send(message);
+            console.log("job terminated");
             process.exit(1);
         })        
     });
