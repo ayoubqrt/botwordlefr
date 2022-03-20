@@ -12,12 +12,13 @@ client.once('ready', function () {
 });
 var doRecapResultsOfDay = function () {
     client.channels.fetch(channelId).then(function (channel) {
+        // channel.send("cc");
         channel.messages.fetch({ limit: 100 }).then(function (messages) {
             console.log("Received ".concat(messages.size, " messages"));
             var dictResult = getMessagesAssociatedToWordle(messages);
             var message = renderMessage(dictResult);
-            // channel.send(message);
-            console.log("salut");
+            channel.send(message);
+            console.log("job terminated");
             // process.exit(1);
         });
     });

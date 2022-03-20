@@ -21,8 +21,11 @@ const doRecapResultsOfDay = () => {
             const dictResult = getMessagesAssociatedToWordle(messages);
             const message = renderMessage(dictResult);
             channel.send(message);
-            console.log("job terminated");
-            process.exit(1);
+
+            setTimeout(() => {
+                console.log("job terminated");
+                process.exit(1);
+            }, 2000);
         })        
     });
 }
