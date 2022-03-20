@@ -20,7 +20,9 @@ const doRecapResultsOfDay = () => {
             console.log(`Received ${messages.size} messages`);
             const dictResult = getMessagesAssociatedToWordle(messages);
             const message = renderMessage(dictResult);
-            channel.send(message);
+            // channel.send(message);
+            console.log("salut");
+            process.exit(1);
         })        
     });
 }
@@ -65,22 +67,29 @@ const getMessagesAssociatedToWordle = (messages) => {
 }
 
 const renderMessage = (dictionaryResults: Object) => {
-    let message = `Les résultats du mot #${wordId} :\n\n`;
+    let message = "";
 
-    for(let note in dictionaryResults) {
-        const users = dictionaryResults[note];
-        const usersString = users.join(', ');
+    if(dictionaryResults === {}) {
+        message = "Personne n'a participé au mot du jour :(";
+    } else {
+        message = `Les résultats du mot #${wordId} :\n\n`;
 
-        if(note == '0') {
-            message += `${usersString} : ${note} essai (jure ethan)\n`;
-        } else if(note == '1') {
-            message += `${usersString} : ${note} essai \n`;
-        } else if(note === "mort") {
-            message += `${usersString} :  bien nul \n`;
-        } else {
-            message += `${usersString} : ${note} essais \n`;
+        for(let note in dictionaryResults) {
+            const users = dictionaryResults[note];
+            const usersString = users.join(', ');
+    
+            if(note == '0') {
+                message += `${usersString} : ${note} essai (jure ethan)\n`;
+            } else if(note == '1') {
+                message += `${usersString} : ${note} essai \n`;
+            } else if(note === "mort") {
+                message += `${usersString} :  bien nul \n`;
+            } else {
+                message += `${usersString} : ${note} essais \n`;
+            }
         }
     }
+
 
     return message;
 }
