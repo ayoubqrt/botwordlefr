@@ -71,8 +71,9 @@ const getMessagesAssociatedToWordle = (messages) => {
 
 const renderMessage = (dictionaryResults: Object) => {
     let message = "";
+    const keys = Object.keys(dictionaryResults);
 
-    if(dictionaryResults === {}) {
+    if(keys.length === 0) {
         message = "Personne n'a participé au mot du jour :(";
     } else {
         message = `Les résultats du mot #${wordId} :\n\n`;

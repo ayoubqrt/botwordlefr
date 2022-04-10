@@ -5,21 +5,22 @@ var token = process.env.token;
 var client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 var channelId = process.env.channelid;
 var FIRST_DAY_WORDLE = moment("2022-01-10T00:00:00");
-var wordId = moment().startOf('day').diff(FIRST_DAY_WORDLE, 'days') + 1;
+var wordId = moment().startOf('day').diff(FIRST_DAY_WORDLE, 'days');
 client.once('ready', function () {
     console.log('Ready!');
     doRecapResultsOfDay();
 });
 var doRecapResultsOfDay = function () {
     client.channels.fetch(channelId).then(function (channel) {
-        // channel.send("cc");
         channel.messages.fetch({ limit: 100 }).then(function (messages) {
             console.log("Received ".concat(messages.size, " messages"));
             var dictResult = getMessagesAssociatedToWordle(messages);
             var message = renderMessage(dictResult);
             channel.send(message);
-            console.log("job terminated");
-            // process.exit(1);
+            setTimeout(function () {
+                console.log("job terminated");
+                process.exit(1);
+            }, 2000);
         });
     });
 };
