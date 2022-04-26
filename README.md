@@ -1,4 +1,4 @@
-# Bot Discord WordleFR
+# Bot Discord WordleFR 
 
 ## Description
 
