@@ -3,11 +3,24 @@ const moment = require("moment");
 require("dotenv").config();
 
 const token = process.env.token;
-const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 const channelId = process.env.channelid;
+const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
 const FIRST_DAY_WORDLE = moment("2022-01-10T00:00:00");
 const wordId = moment().startOf("day").diff(FIRST_DAY_WORDLE, "days") + 1;
+
+const looserEmojis = [
+  ":clown:",
+  ":yawning_face:",
+  ":ICANT:",
+  ":joy_cat:",
+  ":man_facepalming:",
+  ":rainbow_flag:",
+];
+
+const getRandomInt = (max) => {
+  return Math.floor(Math.random() * max);
+};
 
 client.once("ready", () => {
   console.log("Ready!");
@@ -74,6 +87,8 @@ const getMessagesAssociatedToWordle = (messages) => {
 const renderMessage = (dictionaryResults: Object) => {
   let message = "";
   const keys = Object.keys(dictionaryResults);
+  const randomInt = getRandomInt(looserEmojis.length - 1);
+  const looserEmoji = looserEmojis[randomInt];
 
   if (keys.length === 0) {
     message = "Personne n'a participé au mot du jour :(";
@@ -89,7 +104,7 @@ const renderMessage = (dictionaryResults: Object) => {
       } else if (note == "1") {
         message += `${usersString} : ${note} essai \n`;
       } else if (note === "mort") {
-        message += `${usersString} : :skull:  \n`;
+        message += `${usersString} : ${looserEmoji}  \n`;
       } else {
         message += `${usersString} : ${note} essais \n`;
       }
