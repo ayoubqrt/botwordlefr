@@ -7,12 +7,15 @@ const channelId = process.env.channelid;
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
 const FIRST_DAY_WORDLE = moment("2022-01-10T00:00:00");
-const wordId = moment().startOf("day").diff(FIRST_DAY_WORDLE, "days") + 1;
+const wordId =
+  moment()
+    .startOf("day")
+    .diff(FIRST_DAY_WORDLE, "days") + 1;
 
 const looserEmojis = [
   ":clown:",
   ":yawning_face:",
-  ":ICANT:",
+  "<:ICANT:933769870120730624>",
   ":joy_cat:",
   ":man_facepalming:",
   ":rainbow_flag:",
@@ -66,7 +69,9 @@ const getMessagesAssociatedToWordle = (messages) => {
             .join("");
         }
 
-        let note = Array.from(result).slice(0, 1).join("");
+        let note = Array.from(result)
+          .slice(0, 1)
+          .join("");
 
         if (note === "💀") note = "mort";
 
