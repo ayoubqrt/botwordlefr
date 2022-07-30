@@ -1,3 +1,6 @@
+import { ChannelLogsQueryOptions, TextChannel } from "discord.js";
+import { getGlobalStatsMessage, getMeansByUsers, getStatsByUser, getWordsCompletedMessage } from "./stats";
+
 const { Client, Intents } = require("discord.js");
 const moment = require("moment");
 require("dotenv").config();
@@ -7,10 +10,7 @@ const channelId = process.env.channelid;
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
 const FIRST_DAY_WORDLE = moment("2022-01-10T00:00:00");
-const wordId =
-  moment()
-    .startOf("day")
-    .diff(FIRST_DAY_WORDLE, "days") + 1;
+const wordId = moment().startOf("day").diff(FIRST_DAY_WORDLE, "days") + 1;
 
 const looserEmojis = [
   ":clown:",
@@ -27,7 +27,7 @@ const getRandomInt = (max) => {
 
 client.once("ready", () => {
   console.log("Ready!");
-  doRecapResultsOfDay();
+  doStatsGlobalMessage();
 });
 
 const doRecapResultsOfDay = async () => {
@@ -39,6 +39,27 @@ const doRecapResultsOfDay = async () => {
   const dictResult = getMessagesAssociatedToWordle(messages);
   const message = renderMessage(dictResult);
   channel.send(message);
+
+  setTimeout(() => {
+    console.log("job terminated");
+    process.exit(1);
+  }, 2000);
+};
+
+const doStatsGlobalMessage = async () => {
+  const channel: TextChannel = (await client.channels.fetch(channelId)) as TextChannel;
+  const messages = await fetchChannelMessages(channel);
+
+  console.log(`Received ${messages.length} messages`);
+
+  const stats = getStatsByUser(messages);
+  const usersMeans = getMeansByUsers(stats);
+
+  const messageGlobalStats = getGlobalStatsMessage(usersMeans);
+  const messageWordsCompoleted = getWordsCompletedMessage(stats);
+
+  channel.send(messageGlobalStats);
+  channel.send(messageWordsCompoleted);
 
   setTimeout(() => {
     console.log("job terminated");
@@ -69,9 +90,7 @@ const getMessagesAssociatedToWordle = (messages) => {
             .join("");
         }
 
-        let note = Array.from(result)
-          .slice(0, 1)
-          .join("");
+        let note = Array.from(result).slice(0, 1).join("");
 
         if (note === "💀") note = "mort";
 
@@ -117,6 +136,28 @@ const renderMessage = (dictionaryResults: Object) => {
   }
 
   return message;
+};
+
+const fetchChannelMessages = async (channel: TextChannel) => {
+  let allMessages: string[] = [];
+  let lastId;
+
+  while (true) {
+    const options: ChannelLogsQueryOptions = { limit: 100 };
+    if (lastId) {
+      options.before = lastId;
+    }
+
+    const messages = await channel.messages.fetch(options);
+    allMessages = [...allMessages, ...messages.map((m) => m.content)];
+    lastId = messages.last().id;
+
+    if (messages.size !== 100) {
+      break;
+    }
+  }
+
+  return allMessages;
 };
 
 client.login(token);
